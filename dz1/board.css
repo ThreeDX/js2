@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    padding: 20px;
+}
+.ch-wrap {
+    border: 1px solid #111;
+    position: relative;
+}
+.ch-item {
+    float: left;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+.ch-active {
+    border: 3px solid red;
+}
+.ch-item:hover {
+    border: 3px solid blue;
+    cursor: pointer;
+}
+.ch-black {
+    background: #111;
+}
+.ch-label {
+    position: absolute;
+    text-align: center;
+}

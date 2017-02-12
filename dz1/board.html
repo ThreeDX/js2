@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Шахматная доска</title>
+    <link rel="stylesheet" href="board.css" type="text/css">
+    <script src="board.js" defer></script>
+</head>
+<body>
+    <div id="board"></div>
+<script>
+    window.onload = function () {
+
+        // Ниже представлена работа с базовым классом досок. Можно расскомментировать.
+        //var board = new Board("board",8,8,true); // Доска строится в элементе с id = "board", размер 8 х 8, с подписями по осям
+        //board.render(); // Отрисовывает доску
+        //board.setCellSize(40); // Каждая ячейка размером 40 пикселей
+        //board.setDimensions(7,5); // Размер доски 7 х 7
+        //board.showLegend(false); // Убрать подписи
+
+        var chessBoard = new ChessBoard("board");
+        chessBoard.render();
+        chessBoard.activeCell("E4"); // Устанавливаем активную ячейку
+        console.log(chessBoard.activeCell()); // Выводим активную ячейку
+        // Нужно было по заданию подписаться на события доски
+        //chessBoard.addEventListener("click",function(e) {console.log('click on ' + e.target);});
+    };
+</script>
+</body>
+</html>
