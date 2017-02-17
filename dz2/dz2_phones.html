@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Названия телефонов</title>
+</head>
+<body>
+<h1>Телефоны</h1>
+<ul id="phones"></ul>
+
+<script>
+
+    // Обновляет список названий
+    function updatePhonesName(link, id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', link, true);
+        xhr.send();
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+
+                var ul = document.getElementById(id);
+                ul.innerHTML = '';
+
+                try {
+                    JSON.parse(xhr.responseText, function (key, value) {
+                        if (key == 'name') {
+                            var li = document.createElement('li');
+                            li.innerHTML = value;
+                            ul.appendChild(li);
+
+                            return value;
+                        }
+
+                        return undefined;
+                    });
+                } catch (e) {
+                    console.log('JSON parse error: ' + e);
+                }
+            }
+        };
+    }
+
+    updatePhonesName('https://dl.dropboxusercontent.com/u/53408179/phones.json', 'phones');
+
+</script>
+</body>
+</html>
