@@ -22,6 +22,7 @@
 
         var chessBoard = new ChessBoard("board");
         chessBoard.init('board.json');
+        chessBoard.setCellSize(70); // Каждая ячейка размером 40 пикселей
         chessBoard.render();
         //chessBoard.activeCell('E4'); // Устанавливаем активную ячейку
         // chessBoard.removeFigure('E2'); // Убирает фигуру с доски

@@ -5,7 +5,7 @@
     function Figure(position, isWhite) {
         this._isWhite = isWhite;
         this._position = position;
-        this.name = 'П';
+        this._fig = ['\u2659', '\u265F'];
 
     }
 
@@ -36,7 +36,9 @@
 
     // Отрисовывает фигуру
     Figure.prototype.render = function (element) {
-        element.innerHTML = this.name;
+        element.innerHTML = (this._isWhite)
+            ? this._fig[0]
+            : this._fig[1];
         element.classList.toggle('ch-shadow', false);
 
         if (this._isWhite) {
@@ -59,7 +61,7 @@
     function FigureCastle(position, isWhite) {
         Figure.apply(this, arguments);
 
-        this.name = 'Л';
+        this._fig = ['\u2656', '\u265C'];
     }
 
     FigureCastle.prototype = Object.create(Figure.prototype);
@@ -72,7 +74,7 @@
     function FigureKnight(position, isWhite) {
         Figure.apply(this, arguments);
 
-        this.name = 'K';
+        this._fig = ['\u2658', '\u265E'];
     }
 
     FigureKnight.prototype = Object.create(Figure.prototype);
@@ -85,7 +87,7 @@
     function FigureBishop(position, isWhite) {
         Figure.apply(this, arguments);
 
-        this.name = 'C';
+        this._fig = ['\u2657', '\u265D'];
     }
 
     FigureBishop.prototype = Object.create(Figure.prototype);
@@ -98,7 +100,7 @@
     function FigureQueen(position, isWhite) {
         Figure.apply(this, arguments);
 
-        this.name = 'Ф';
+        this._fig = ['\u2655', '\u265B'];
     }
 
     FigureQueen.prototype = Object.create(Figure.prototype);
@@ -111,7 +113,7 @@
     function FigureKing(position, isWhite) {
         Figure.apply(this, arguments);
 
-        this.name = 'Кр';
+        this._fig = ['\u2654', '\u265A'];
     }
 
     FigureKing.prototype = Object.create(Figure.prototype);

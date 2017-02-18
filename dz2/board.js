@@ -123,8 +123,8 @@
                 item.style.width = this._cellSize + 'px';
                 item.style.height = this._cellSize + 'px';
                 item.style.lineHeight = this._cellSize + 'px';
-                item.style.fontSize = Math.floor(this._cellSize / 2) + 'px';
-                
+                item.style.fontSize = Math.floor(this._cellSize / 1.5) + 'px';
+
                 item.classList.add('ch-item');
 
                 if (i && i % 2)
