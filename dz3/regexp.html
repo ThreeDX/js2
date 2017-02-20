@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регулярные выражения</title>
+    <style type="text/css">
+        label {
+            margin: 10px 0;
+            display: inline-block;
+        }
+        .good {
+            border: 2px solid green;
+        }
+        .bad {
+            border: 2px solid red;
+        }
+        input {
+            border: 2px solid gray;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+<p>Все в консоле</p>
+<form method="get" action="#"  onsubmit="return checkForm();" >
+    <label>Телефон: <input type="text" name="phone" placeholder="+7(965)-123-45-67"></label><br>
+    <label>Email: <input type="email" name="email" placeholder="aa@mail.ru"></label><br>
+    <label>Серия и номер паспорта: <input type="text" name="passport" placeholder="1234 123456"></label><br>
+    <input type="submit" value="Проверить">
+</form>
+<script>
+    // Цвет
+    console.log("#072738".match(/#\d{6}/g));
+
+    // Положительные числа
+    console.log(getGoodNumbers('1.5 0 -5 12. 123.4. 78 -1.2'));
+
+    // Время
+    console.log("09:00, 21-30".match(/\d{2}[:-]\d{2}/g));
+
+    // Ячейка
+    console.log("A1".match(/^[A-H][1-8]$/));
+
+    // Меняет элементу класс
+    function changeElementResult(element, result) {
+        if (!result) {
+            element.className = 'bad';
+        } else {
+            element.className = 'good';
+        }
+
+        return result;
+    }
+
+    //Проверка формы
+    function checkForm() {
+
+        var elements = document.querySelectorAll('input');
+
+        var result = true;
+        for (var i=0; i < elements.length; i++) {
+            var element = elements[i];
+
+            switch (element.name) {
+                case 'phone':
+                    if ( ! changeElementResult( element, /^\+7\(\d{3}\)-\d{3}-\d{2}-\d{2}$/.test(element.value) ) ) {
+                        result = false;
+                    }
+                    break;
+                case 'email':
+                    if ( ! changeElementResult( element, /^[A-z0-9-_.]+@[[A-z0-9-.]+\.[A-z]{2,4}$/.test(element.value) ) ) {
+                        result = false;
+                    }
+                    break;
+                case 'passport':
+                    if ( ! changeElementResult( element, /^\d{4} \d{6}$/.test(element.value) ) ) {
+                        result = false;
+                    }
+                    break;
+            }
+        }
+
+        return false; // чтобы не сабмитить страницу, а так надо возвращать result
+    }
+
+    // Ишет положительные числа в строке
+    function getGoodNumbers(str) {
+        var numbers = [];
+        str.split(/\s+/).forEach(function(value) {
+            if (/^\d+(?:\.\d*)?$/.test(value)) {
+                numbers.push(value);
+            }
+        });
+        return numbers;
+    }
+
+</script>
+</body>
+</html>
