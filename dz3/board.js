@@ -104,7 +104,6 @@
         this._wrapper.style.width = (this._columns * this._cellSize) + 'px';
         this._wrapper.style.height = (this._lines * this._cellSize) + 'px';
 
-        var i = 0;
         for (var ln = this._lines; ln > 0; ln--) {
             for (var cl = 0; cl < this._columns; cl++) {
                 var item = document.createElement('div');
@@ -127,19 +126,12 @@
 
                 item.classList.add('ch-item');
 
-                if (i && i % 2)
+                if ((ln + cl) % 2)
                     item.classList.add('ch-black');
 
                 this.triggerEvent("renderCell", {
                     Cell: item
                 });
-
-
-                // Нужно для рисование в шахматном порядке квадратов
-                if (this._columns%2 == 0)
-                    i += ((i + 2) % (this._columns + 1) ) ? 1 : 2;
-                else
-                    i++;
 
                 // Рисуем нумерацию столбцов
                 if (this._drawLegend && ln == 1) {

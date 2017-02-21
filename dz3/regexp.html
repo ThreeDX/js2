@@ -85,13 +85,9 @@
 
     // Ишет положительные числа в строке
     function getGoodNumbers(str) {
-        var numbers = [];
-        str.split(/\s+/).forEach(function(value) {
-            if (/^\d+(?:\.\d*)?$/.test(value)) {
-                numbers.push(value);
-            }
+        return str.split(/\s+/).filter(function(value) {
+            return (/^\d+(?:\.\d*)?$/.test(value));
         });
-        return numbers;
     }
 
 </script>
