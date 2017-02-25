@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Валидация формы</title>
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            crossorigin="anonymous"
+            defer></script>
+    <style type="text/css">
+        label {
+            margin: 10px 0;
+            display: inline-block;
+        }
+        input {
+            border: 2px solid gray;
+            padding: 2px;
+        }
+        label:after {
+            color: red;
+            content: attr(data-content);
+        }
+    </style>
+</head>
+<body>
+<form method="post" action="#"  onsubmit="return checkForm();" >
+    <label id="Username">Username: <input type="text" name="username" placeholder="Somebody"></label><br>
+    <label id="Password">Password: <input type="password" name="password" placeholder="mypassword"></label><br>
+    <label id="Email">Email: <input type="email" name="email" placeholder="aa@mail.ru"></label><br>
+    <label id="Gender">Gender: <input type="text" name="gender" placeholder="m|f"></label><br>
+    <label id="Credit Card">Credit card: <input type="text" name="credit_card" placeholder="9872389-2424-234224-234"></label><br>
+    <label id="Birth">Birth: <input type="text" name="birth" placeholder="1970-01-01"></label><br>
+    <label id="Bio">Bio: <input type="text" name="bio" placeholder="This is good! I think I will switch to another language"></label><br>
+    <input type="submit" value="Проверить">
+</form>
+<script>
+    // Рисует результат проверки формы
+    function drawResult(result) {
+        console.log(result);
+        if (!result.result) {
+            for (var id in result.error){
+                $('label[id=\'' + id + '\']').attr('data-content', ' ' + result.error[id]);
+            }
+        } else {
+            alert('ok!');
+        }
+    }
+
+    //Проверка формы
+    function checkForm() {
+
+        var elements = $('input');
+
+        var data = {};
+        Array.prototype.forEach.call(elements, function(element){
+            if (element.type != 'submit') {
+                data[element.name] = element.value;
+                element.parentElement.setAttribute('data-content', '');
+            }
+        });
+
+        $.ajax({
+            url: 'validator.php',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function(res, textStatus) {
+            drawResult(res);
+        }});
+
+        return false; // чтобы не сабмитить страницу
+    }
+</script>
+</body>
+</html>
