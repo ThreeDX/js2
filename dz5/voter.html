@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head lang="ru">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Голосовалка</title>
+    <link href="voter.css" type="text/css" rel="stylesheet">
+    <script src="voter.js"></script>
 </head>
 <body>
+<div id="voter" class="voter">
+    <span class="down">-</span>
+    <span class="vote">0</span>
+    <span class="up">+</span>
+</div>
+<script>
+    var myVoter = new Voter({
+        elem: 'voter'
+    });
 
+    myVoter.setVote(10);
+
+</script>
 </body>
 </html>

@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 5px;
+}
+body {
+    padding: 10px;
+}
+#clock {
+    padding: 5px;
+    font-size: 54px;
+    text-align: center;
+    color: #00009f;
+}
+.clock {
+    border: 1px solid blue;
+    background-color: #eaf2ff;
+    display: inline-block;
+}
+.button {
+    border: 1px solid blue;
+    margin-left: 10px;
+    padding: 5px;
+    font-size: 54px;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #EEEEEE;
+    color: #00009f;
+}
+.button:hover {
+    background-color: #CCCCCC;
+}
+.button:active {
+    background-color: #AAAAAA;
+}
+.red {
+    color: red;
+}
+
