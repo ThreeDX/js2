@@ -7,7 +7,7 @@ var minifyCSS = require('gulp-minify-css');
 var jsonminify = require('gulp-jsonminify');
 var jade = require('gulp-jade');
 
-gulp.task('compile', function(){
+gulp.task('compile', ['compile-jade', 'minify-json'], function(){
     return gulp.src('app/*.html')
         .pipe(useref())
         .pipe(gulpIf('*.css', minifyCSS()))
@@ -39,6 +39,6 @@ gulp.task('compile-jade', function() {
     .pipe(gulp.dest('app'))
 });
 
-gulp.task('watch', ['browser-sync', 'compile-jade', 'compile', 'minify-json'], function(){
-    gulp.watch('app/**/*.*', ['compile-jade', 'compile', 'minify-json', browserSync.reload]);
+gulp.task('watch', ['browser-sync', 'compile'], function(){
+    gulp.watch('app/**/*.*', ['compile', browserSync.reload]);
 });

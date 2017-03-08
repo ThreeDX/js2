@@ -3,14 +3,23 @@ html(lang='ru')
     head
         meta(charset='utf-8')
         title Шахматная доска
+        = "\n"
         //build:css css/board.min.css
+        = "\n"
         link(rel='stylesheet', href='css/board.css')
+        = "\n"
         //endbuild
+        = "\n"
         //build:js js/board.min.js
+        = "\n"
         script(src='js/board.js')
+        = "\n"
         script(src='js/chessboard.js')
+        = "\n"
         script(src='js/figure.js')
+        = "\n"
         //endbuild
+        = "\n"
     body
         div#board
         script window.onload = function () { var chessBoard = new ChessBoard("board"); chessBoard.init('board.json'); chessBoard.setCellSize(70); chessBoard.render();};

@@ -1,1 +1,10 @@
-<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><title>Шахматная доска</title><!--build:css css/board.min.css--><link rel="stylesheet" href="css/board.css"><!--endbuild--><!--build:js js/board.min.js--><script src="js/board.js"></script><script src="js/chessboard.js"></script><script src="js/figure.js"></script><!--endbuild--></head><body><div id="board"></div><script>window.onload = function () { var chessBoard = new ChessBoard("board"); chessBoard.init('board.json'); chessBoard.setCellSize(70); chessBoard.render();};</script></body></html>
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><title>Шахматная доска</title>
+<!--build:css css/board.min.css-->
+<link rel="stylesheet" href="css/board.css">
+<!--endbuild-->
+<!--build:js js/board.min.js-->
+<script src="js/board.js"></script>
+<script src="js/chessboard.js"></script>
+<script src="js/figure.js"></script>
+<!--endbuild-->
+</head><body><div id="board"></div><script>window.onload = function () { var chessBoard = new ChessBoard("board"); chessBoard.init('board.json'); chessBoard.setCellSize(70); chessBoard.render();};</script></body></html>
