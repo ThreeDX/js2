@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Шахматная доска</title>
+    <link rel="stylesheet" href="board.css" type="text/css">
+    <script src="board.js" defer></script>
+    <script src="fig_data.js" defer></script>
+    <script src="figure.js" defer></script>
+</head>
+<body>
+    <p>Используйте мышь, стрелки и пробел для выделения ячеек. Del в активной ячейке или клик правой кнопкой мыши удаляет фигуры. Для восстановления фигуры кликнуть по ней.</p>
+    <div id="board"></div>
+<script>
+    window.onload = function () {
+        var board = new Board("board");
+        board.init(fig_data);
+        board.render();
+        board.setActive('A8');
+    };
+</script>
+</body>
+</html>

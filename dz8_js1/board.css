@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    padding: 20px;
+}
+p {
+    font-size: 18px;
+    padding: 20px 0;
+    width: 600px;
+}
+.ch-wrap {
+    border: 1px solid #111;
+    position: relative;
+    width: 560px;
+    height: 560px;
+}
+.ch-item, .ch-del {
+    float: left;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 3px;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 46px;
+}
+.ch-shadow {
+    text-shadow:
+            -1px -1px 1px #AAA,
+            1px -1px 1px #AAA,
+            -1px 1px 1px #AAA,
+            1px 1px 1px #AAA;
+}
+.ch-active {
+    border: 3px solid red;
+    padding-top: 0;
+}
+.ch-item:hover, .ch-del:hover {
+    border: 3px solid blue;
+    cursor: pointer;
+    padding-top: 0;
+}
+.ch-black {
+    background: #111;
+}
+.ch-label {
+    position: absolute;
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 35px;
+}
+#active {
+    left: 680px;
+    border: 1px solid black;
+}
+.dels {
+    position: absolute;
+    text-align: center;
+    width: 560px;
+    height: 140px;
+    line-height: 70px;
+    font-size: 35px;
+    left: 680px;
+    border: 1px solid black;
+}
+#blacks {
+    top: 140px;
+}
+#whites {
+    top: 350px;
+}
