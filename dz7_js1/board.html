@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Шахматная доска</title>
+    <link rel="stylesheet" href="board.css" type="text/css">
+    <script src="board.js" defer></script>
+    <script src="fig_data.js" defer></script>
+    <script src="figure.js" defer></script>
+</head>
+<body>
+    <div id="board"></div>
+<script>
+    window.onload = function () {
+        var board = new Board("board");
+        board.init(fig_data);
+        board.render();
+    };
+</script>
+</body>
+</html>
