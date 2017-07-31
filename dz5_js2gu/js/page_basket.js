@@ -11,9 +11,13 @@ class ApplicationBasket {
         this.bWrapper = null;
         this.server = server;
 
+        let basketId = localStorage['basketId']; // Запрашиваем в хранилише
+        if (!basketId)
+            basketId = 0; // Сервер выдаст новый номер корзины
+
         // Запрашиваем информацию у сервера
         this.request('products', 'get', null, this.onLoadProducts);
-        this.request('basket/1', 'get', null, this.onLoadBasket);
+        this.request('basket/' + basketId, 'get', null, this.onLoadBasket);
     }
 
     /**
@@ -22,8 +26,11 @@ class ApplicationBasket {
      */
     onLoadProducts(data) {
         console.log('Products:', data.products);
+        const pElement = $('.products');
         this.pWrapper = new ProductsWrapper(data.products);
-        this.pWrapper.render($('.products'));
+        this.pWrapper.render(pElement);
+        // Обработчики добавления товара, по-хорошему надо добавлять когда есть и товары и корзина
+        pElement.on('click', 'button', this, ProductsWrapper.onBuy);
     }
 
     /**
@@ -32,8 +39,39 @@ class ApplicationBasket {
      */
     onLoadBasket(data) {
         console.log('Basket:', data.basket);
-        this.bWrapper = new Basket(data.basket.id);
-        this.bWrapper.init(data.basket);
+        localStorage['basketId'] = data.basket.id; // Сохраним в хранилище на будущее
+        this.bWrapper = new BasketWrapper(data.basket);
+        this.renderBasket();
+        // Обработчики удаления товара
+        $('.basket').on('click', 'button', this, BasketWrapper.onDel);
+    }
+
+    /**
+     * Отрисовывает корзину по приходу данных с сервера
+     */
+    renderBasket() {
+        const bElement = $('.basket');
+        this.bWrapper.render(bElement);
+    }
+
+    /**
+     * Обработчик удаления товара (от сервера)
+     * @param data
+     */
+    onDelProduct(data) {
+        console.log('Basket del product:', data.product);
+        this.bWrapper.basket.delProduct(data.product.id);
+        this.renderBasket();
+    }
+
+    /**
+     * Обработчик добавления товара (от сервера)
+     * @param data
+     */
+    onAddProduct(data) {
+        console.log('Basket add product:', data.product);
+        this.bWrapper.basket.addProduct(data.product);
+        this.renderBasket();
     }
 
     /**

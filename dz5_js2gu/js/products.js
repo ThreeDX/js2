@@ -16,8 +16,8 @@ class Product {
      */
     render() {
         return $('<div/>', {
-            id: `product_${this.id}`,
-            class: 'product'
+            'id': `product_${this.id}`,
+            'class': 'product'
         }).html(`<img src="img/${this.id}.jpg" alt="${this.name}" class="icon">
             <div class="name">${this.name}</div>
             <div class="price">${this.price} <span>руб.</span></div>
@@ -42,12 +42,17 @@ class ProductsWrapper {
     render($element) {
         $element.empty();
         this.items.forEach((i) => i.render().appendTo($element));
-
-        //$element.on('click', 'button', this, Products.onBuy);
     }
 
-    /*static onBuy(event) {
-     console.log(event);
-     console.log(event.target.parentNode.id.split('_')[1]);
-     }*/
+    /**
+     * Обработчик клика покупки товара
+     * @param event
+     */
+    static onBuy(event) {
+        const productId = event.target.parentNode.id.split('_')[1];
+        const context = event.data;
+        // Посылаем запрос к серверу на добавление в корзину
+        context.request('basket/'+context.bWrapper.basket.id, 'post', {product: productId}, context.onAddProduct);
+    }
+
 }

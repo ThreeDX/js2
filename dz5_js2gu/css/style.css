@@ -27,9 +27,9 @@ body {
     position: relative;
     text-align: center;
 }
-.products {
+.products, .basket {
     width: 900px;
-    margin: 0 auto;
+    margin: 20px auto;
     background-color: #fff;
     border: 1px solid #333;
     padding: 20px;
@@ -72,4 +72,68 @@ body {
     cursor: pointer;
     font-weight: bold;
     border-radius: 3px;
+}
+.summary {
+    font-size: 20px;
+    line-height: 40px;
+}
+.summary span {
+    color: #0074D9;
+    font-weight: bold;
+}
+.items {
+    width: 100%;
+    border-spacing: 0;
+
+}
+.items tr {
+    height: 40px;
+}
+.items tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.items tr:last-child {
+    font-weight: bold;
+}
+.items tr td, .items tr th {
+    line-height: 40px;
+    vertical-align: middle;
+    padding: 2px;
+}
+.items tr:hover td {
+    background-color: #eee;
+}
+.items tr:hover:last-child td {
+    background-color: #fff;
+}
+.items tr:last-child td {
+    border-top: 1px solid #666;
+}
+.items tr td:nth-child(2) {
+    width: 30%;
+    text-align: left;
+}
+.items tr td:nth-child(2n+3), .items tr:last-child td {
+    text-align: right;
+    padding-right: 20px;
+}
+.items img {
+    width: 40px;
+    display: inline;
+    vertical-align: middle;
+}
+.items button {
+    cursor: pointer;
+    color: #ff6f62;
+    background-color: #ffc7ca;
+    border: 1px solid #ff7320;
+    line-height: 24px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+}
+button:hover {
+    background-color: #ffc7ca;
+    box-shadow: 0 0 5px #ff6f62;
 }

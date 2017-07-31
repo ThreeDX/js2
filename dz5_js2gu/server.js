@@ -5,6 +5,7 @@ const cBasket = require('./js/basket.js');
 const rest = restify.createServer({
     name: 'dz5-server'
 });
+rest.use(restify.plugins.bodyParser());
 
 // Любому запросу прописываем разрешение на работу
 // с пользовательскими данными
@@ -15,6 +16,14 @@ rest.use((req, res, next) => {
     // Разрешаем обрабатывать пользовательские данные
     res.header('Access-Control-Allow-Credentials', 'true');
     next();
+});
+
+// Определяем обработку предварительных запросов
+rest.opts('.*', function(req, res, next) {
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-Requested-With, Cookie, Set-Cookie, Accept, Access-Control-Allow-Credentials, Origin, Content-Type, Request-Id , X-Api-Version, X-Request-Id');
+    res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PATCH, PUT, DELETE');
+
+    res.send(204);
 });
 
 
@@ -37,13 +46,6 @@ const products = [ // Товары
     }
 ];
 let baskets = []; // Корзины
-let reviews = [ // Отзывы
-    {
-        user: 'Вася',
-        message: 'Здесь был Вася!',
-        approve: true
-    }
-];
 
 /**
  * Возвращает корзину или создает новую, если такой еще нет
@@ -60,6 +62,15 @@ function getBasket(id) {
     return basket;
 }
 
+/**
+ * Возвращает товар по номеру
+ * @param id
+ * @returns {*|undefined}
+ */
+function getProduct(id) {
+    id = parseInt(id);
+    return products.find((p) => p.id === id);
+}
 
 
 /////// ЗАПРОСЫ /////////
@@ -72,89 +83,35 @@ rest.get('/products', (req, res) => res.send(200, {result: 0, message: 'OK', pro
 
 // Запрос корзины
 rest.get('/basket/:id', (req, res) => {
+    console.log('basket request:', req.params.id);
     return res.send(200, {result: 0, message: 'OK', basket: getBasket(req.params.id)})
 });
 
+// Добавляем товар в корзину
+rest.post('/basket/:id', function (req, res) {
+    if (!req.params || !req.params.id || !req.body || !req.body.product)
+        return res.send(200, {result: 1, message: 'Incorrect request'});
 
-// Получаем данные о коллекции
-rest.get('/cars', function (req, res) {
-    return res.send(200, {
-        result: cars,
-    });
+    const basket = getBasket(req.params.id);
+    const product = getProduct(req.body.product);
+    console.log('basket add product request:', req.params.id, product);
+    if (product && basket.addProduct(product))
+        return res.send(200, {result: 0, message: 'OK', product: product});
+
+    return res.send(200, {result: 2, message: 'Product not added'});
 });
 
-// Создаем элемент в коллекции
-rest.post('/cars', function (req, res) {
-    if (!req.params || !req.params.type || !req.params.brand)
-        return res.send(400, {});
+// Удаляем товар из корзины
+rest.del('/basket/:id', function (req, res) {
+    if (!req.params || !req.params.id || !req.body || !req.body.product)
+        return res.send(200, {result: 1, message: 'Incorrect request'});
 
-    cars.push({
-        id: cars.length + 1,
-        type: req.params.type,
-        brand: req.params.brand,
-    });
+    const basket = getBasket(req.params.id);
+    console.log('basket del product request:', req.params.id, req.body.product);
+    if (basket.delProduct(req.body.product.id))
+        return res.send(200, {result: 0, message: 'OK', product: {id: req.body.product.id}});
 
-    res.send(200, {result: 'ok!'});
-});
-
-// Удаляем элемент в коллекции
-rest.del('/cars/:id', function (req, res) {
-    var id = +req.params.id;
-    var car = cars.filter(function (v) {
-        return v.id === id;
-    })[0];
-
-    if (!car)
-        return res.send(404, 'Нет такой машины!');
-
-    cars = cars.filter(function (value) {
-        return value.id !== id;
-    });
-
-    return res.send(200, {
-        result: 'ok!',
-    });
-});
-
-// Получаем информацию об элементе коллекции
-rest.get('/cars/:id', function (req, res) {
-    var id = +req.params.id;
-    var car = cars.filter(function (v) {
-        return v.id === id;
-    })[0];
-
-    if (!car)
-        return res.send(404, 'Нет такой машины!');
-
-    res.send(200, {
-        result: car
-    });
-});
-
-// Изменяем информацию об элементе коллекции
-rest.put('/cars/:id', function (req, res) {
-    if (!req.params.type || !req.params.brand)
-        return res.send(400, 'Некорректный запрос!');
-
-    var id = +req.params.id;
-    var carIndex = -1;
-    cars.forEach(function (v, i) {
-        if (v.id === id)
-            carIndex = i;
-    });
-
-    if (carIndex === -1)
-        return res.send(404, 'Нет такой машины!');
-
-    cars[carIndex] = {
-        id: id,
-        type: req.params.type,
-        brand: req.params.brand,
-    };
-
-    return res.send(200, {
-        result: 'ok!',
-    });
+    return res.send(200, {result: 3, message: 'Product not deleted'});
 });
 
 rest.listen(8888, function () {
