@@ -131,7 +131,9 @@ class BasketWrapper {
         const basket = $('<div/>', {
             id: `basket_${this.basket.id}`
         }).html(html);
+
         basket.appendTo($element);
+        return basket;
     }
 
     /**

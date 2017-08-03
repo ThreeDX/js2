@@ -51,7 +51,20 @@ class ApplicationBasket {
      */
     renderBasket() {
         const bElement = $('.basket');
-        this.bWrapper.render(bElement);
+        this.bWrapper.render(bElement).droppable({
+            tolerance:"touch",
+            context: this,
+            activate: function () {
+                $(this).css({"box-shadow":"0 0 5px red"})
+            },
+            deactivate: function () {
+                $(this).css({"box-shadow":"0 0 0 transparent"})
+            },
+            drop:function (event, ui) {
+                const productId = ui.draggable[0].id.split('_')[1];
+                this.request('basket/'+this.bWrapper.basket.id, 'post', {product: productId}, this.onAddProduct);
+            }.bind(this)
+        });
     }
 
     /**

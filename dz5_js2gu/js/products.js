@@ -41,7 +41,12 @@ class ProductsWrapper {
      */
     render($element) {
         $element.empty();
-        this.items.forEach((i) => i.render().appendTo($element));
+        this.items.forEach((i) => i.render().draggable({
+            revert: false,
+            helper: 'clone',
+            cursor: "move",
+            appendTo: ".products"
+        }).appendTo($element));
     }
 
     /**
